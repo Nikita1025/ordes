@@ -1,12 +1,12 @@
 import React from 'react';
 
 import './App.scss';
-import { LoginForm } from 'src/components/auth/loginForm';
+import { RoutesComponent } from 'src/app/routes/RoutesComponent';
 
 const App = () => {
   return (
     <div className="App">
-      <LoginForm />
+      <RoutesComponent />
     </div>
   );
 };

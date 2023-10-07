@@ -17,4 +17,22 @@ export type AsyncThunkConfig = {
   fulfilledMeta?: unknown;
   rejectedMeta?: unknown;
 };
+
+export type PurchaseOrdersResponseType = {
+  results: PurchaseOrderType[];
+};
+export type PurchaseOrderType = {
+  id: number;
+  number: string;
+  start_date: null;
+  material: MaterialTypeAndProductType;
+  product: MaterialTypeAndProductType;
+  is_finished: boolean;
+};
+
+export type MaterialTypeAndProductType = {
+  id: number;
+  code: string;
+  name: string;
+};
 export type StatusType = 'idle' | 'loading' | 'success' | 'failed';
