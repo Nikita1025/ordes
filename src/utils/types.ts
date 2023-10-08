@@ -29,10 +29,22 @@ export type PurchaseOrderType = {
   product: MaterialTypeAndProductType;
   is_finished: boolean;
 };
+export type EditPurchaseOrderType = {
+  id?: number;
+  number?: string;
+  start_date?: null | string;
+  material: MaterialTypeAndProductType;
+  product: MaterialTypeAndProductType;
+  is_finished?: boolean;
+};
+export type EditRequestPurchaseOrderType = {
+  id: string;
+  data: EditPurchaseOrderType;
+};
 
 export type MaterialTypeAndProductType = {
-  id: number;
-  code: string;
-  name: string;
+  id?: number;
+  code?: string;
+  name?: string;
 };
 export type StatusType = 'idle' | 'loading' | 'success' | 'failed';

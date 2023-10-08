@@ -2,16 +2,17 @@ import React, { useEffect } from 'react';
 
 import {
   useAppDispatch,
-  appNomenclaturesSelector,
   useAppSelector,
   purchaseOrdersTC,
+  appPurchaseOrdersSelector,
 } from 'src/store';
 
+import s from './purchase-orders.module.scss';
 import { PurchaseOrder } from './purchaseOrder/purchase-order';
 
 export const PurchaseOrders = () => {
   const dispatch = useAppDispatch();
-  const purchaseOrders = useAppSelector(appNomenclaturesSelector);
+  const purchaseOrders = useAppSelector(appPurchaseOrdersSelector);
 
   useEffect(() => {
     dispatch(purchaseOrdersTC());
@@ -25,6 +26,7 @@ export const PurchaseOrders = () => {
           product={el.product}
           number={el.number}
           is_finished={el.is_finished}
+          id={el.id}
         />
       ))}
     </div>

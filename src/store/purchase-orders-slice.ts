@@ -2,8 +2,9 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 import {
   AsyncThunkConfig,
+  EditPurchaseOrderType,
+  EditRequestPurchaseOrderType,
   errorMessage,
-  PurchaseOrdersResponseType,
   PurchaseOrderType,
 } from 'src/utils';
 
@@ -14,10 +15,12 @@ import { AppRootStateType } from './store';
 
 type AuthState = {
   purchaseOrders: PurchaseOrderType[];
+  purchaseOrder: PurchaseOrderType;
 };
 
 const initialState: AuthState = {
   purchaseOrders: [],
+  purchaseOrder: {} as PurchaseOrderType,
 };
 
 const slice = createSlice({
@@ -28,6 +31,11 @@ const slice = createSlice({
     builder.addCase(purchaseOrdersTC.fulfilled, (state, action) => {
       if (action.payload) {
         state.purchaseOrders = action.payload;
+      }
+    });
+    builder.addCase(purchaseOrderTC.fulfilled, (state, action) => {
+      if (action.payload) {
+        state.purchaseOrder = action.payload;
       }
     });
   },
@@ -53,5 +61,46 @@ export const purchaseOrdersTC = createAsyncThunk<
     return rejectWithValue(errorMessage(dispatch, error));
   }
 });
-export const appNomenclaturesSelector = (state: AppRootStateType) =>
+export const purchaseOrderTC = createAsyncThunk<
+  PurchaseOrderType,
+  string,
+  AsyncThunkConfig
+>('purchaseOrders/getPurchaseOrder', async (id, { dispatch, rejectWithValue }) => {
+  dispatch(setSubmittingAC('loading'));
+  try {
+    const res = await purchaseOrdersApi.getPurchaseOrder(id);
+
+    dispatch(setSubmittingAC('success'));
+
+    return res;
+  } catch (e) {
+    const error = e as Error | AxiosError;
+
+    return rejectWithValue(errorMessage(dispatch, error));
+  }
+});
+export const editPurchaseOrderTC = createAsyncThunk<
+  PurchaseOrderType,
+  EditRequestPurchaseOrderType,
+  AsyncThunkConfig
+>(
+  'purchaseOrders/editPurchaseOrder',
+  async ({ data, id }, { dispatch, rejectWithValue }) => {
+    dispatch(setSubmittingAC('loading'));
+    try {
+      const res = await purchaseOrdersApi.editPurchaseOrder(data, id);
+
+      dispatch(setSubmittingAC('success'));
+
+      return res;
+    } catch (e) {
+      const error = e as Error | AxiosError;
+
+      return rejectWithValue(errorMessage(dispatch, error));
+    }
+  },
+);
+export const appPurchaseOrdersSelector = (state: AppRootStateType) =>
   state.purchaseOrders.purchaseOrders;
+export const appPurchaseOrderSelector = (state: AppRootStateType) =>
+  state.purchaseOrders.purchaseOrder;

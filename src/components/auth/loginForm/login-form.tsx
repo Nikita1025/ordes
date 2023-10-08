@@ -2,13 +2,14 @@ import React from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { loginSchema } from 'src/common/schemas/login-schema';
-import { Button } from 'src/components/ui-kit/button';
-import { ControlledTextField } from 'src/components/ui-kit/controlled';
+import { loginSchema } from 'src/common/schemas';
+import { Button } from 'src/components/ui/button';
+import { ControlledTextField } from 'src/components/ui/controlled';
 import { loginTC, useAppDispatch } from 'src/store';
 import { LoginFormType } from 'src/utils';
 
 import s from './login-form.module.scss';
+
 export const LoginForm = () => {
   const dispatch = useAppDispatch();
   const {
