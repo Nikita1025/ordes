@@ -9,16 +9,13 @@
 
   .content {
     @include flex-block($flex-direction: row, $justify-content: space-between);
-
-    width: 1280px;
-    margin: 0 auto;
-.incta{
-  text-decoration: none;
-
-}
+    width: 100%;
     .text {
       display: block;
       padding: 12px 0 12px 88px;
+      font-size: 24px;
+      line-height: 32px;
+      font-weight: 700;
     }
 
     .options_container {
@@ -29,8 +26,4 @@
       padding-right: 42px;
     }
   }
-}
-
-.select {
-  width: 163px;
 }

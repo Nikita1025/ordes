@@ -8,6 +8,8 @@ import { ControlledTextField } from 'src/components/ui/controlled';
 import { loginTC, useAppDispatch } from 'src/store';
 import { LoginFormType } from 'src/utils';
 
+import { ErrorSnackbar } from '../../../common/errorSnackbar/error-snackbar';
+
 import s from './login-form.module.scss';
 
 export const LoginForm = () => {
@@ -31,6 +33,7 @@ export const LoginForm = () => {
 
   return (
     <div className={s.card}>
+      <ErrorSnackbar />
       <div className={s.content}>
         <form onSubmit={handleSubmit(submitData)} className={s.form}>
           <ControlledTextField
