@@ -1,3 +1,5 @@
+@import "src/styles/mixins";
+@import "src/styles/typography";
 .container{
     display: flex;
     margin-bottom: 20px;
@@ -7,16 +9,11 @@
         flex-direction: column;
         padding: 20px 25px 10px 70px;
         .title{
-            font-size: 24px;
-            line-height: 32px;
-            font-weight: 700;
+            @include typography($font-size-xxl, $line-height-l, $font-weight-bold);
             margin-bottom: 15px;
             transition: 0.3s;
             .description{
-                font-size: 16px;
-                line-height: 20px;
-                font-weight: 400;
-
+                @include typography($font-size-m, $line-height-m, $font-weight-regular);
             }
         }
     }
@@ -31,8 +28,7 @@
     gap: 5px;
     cursor: pointer;
     .back{
-        font-weight: 500;
-        font-size: 15px;
+        @include typography($font-size-m, $line-height-m, $font-weight-h3-large);
         transition: 0.3s;
     :hover{
         font-size: 17px;

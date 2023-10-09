@@ -1,5 +1,5 @@
 import { FieldValues, useController, UseControllerProps } from 'react-hook-form';
-import { TexField, TextFieldPropsType } from 'src/components/ui-kit/text-field';
+import { TexField, TextFieldPropsType } from 'src/components/ui/text-field';
 
 type Props<T extends FieldValues> = Omit<
   UseControllerProps<T>,

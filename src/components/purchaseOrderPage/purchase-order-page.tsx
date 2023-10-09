@@ -2,15 +2,14 @@ import React, { useEffect, useState } from 'react';
 
 import { useNavigate, useParams } from 'react-router-dom';
 import VectorIcon from 'src/assets/icon/vector-icon';
+import { EditPurchaseOrderForm } from 'src/components/edit-purchase-order-form';
+import { Button } from 'src/components/ui/button';
 import {
   purchaseOrderTC,
   appPurchaseOrderSelector,
   useAppSelector,
   useAppDispatch,
 } from 'src/store';
-
-import { EditPurchaseOrderForm } from '../edit-purchase-order-form';
-import { Button } from '../ui/button';
 
 import s from './purchase-order-page.module.scss';
 export const PurchaseOrderPage = () => {

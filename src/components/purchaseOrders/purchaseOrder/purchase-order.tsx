@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 
-import { Navigate, useNavigate } from 'react-router-dom';
-import DeleteIcon from 'src/assets/icon/delete-icon';
-import EditIcon from 'src/assets/icon/edit-icon';
+import { useNavigate } from 'react-router-dom';
 import { MaterialTypeAndProductType } from 'src/utils';
 
 import { PATH } from '../../../app/routes/routes';
@@ -55,14 +53,10 @@ export const PurchaseOrder = ({
                 <span onClick={() => onClickOrderHandler(id)} className={s.title}>
                   {product.name}
                 </span>
-                <span className={s.category}>{number}</span>
-                <span className={s.price}>{product.code}</span>
+                <span className={s.number_order}>{number}</span>
+                <span className={s.code}>{product.code}</span>
               </div>
             </div>
-          </div>
-          <div className={s.icons}>
-            <EditIcon className={s.icon} />
-            <DeleteIcon className={s.icon} />
           </div>
         </>
         {/*)}*/}

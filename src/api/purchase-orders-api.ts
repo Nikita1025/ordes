@@ -30,4 +30,11 @@ export const purchaseOrdersApi = {
 
     return data;
   },
+  async addPurchaseOrder(addData: any) {
+    const { data } = await baseApi.post('workorders/', addData, {
+      headers: { Authorization: `Token ${token}` },
+    });
+
+    return data;
+  },
 };

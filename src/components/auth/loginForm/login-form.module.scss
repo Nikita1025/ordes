@@ -15,16 +15,6 @@
       margin-bottom: 13px;
     }
 
-    .oauthWrap {
-      @include flex-block($flex-direction: row, $gap: 60px);
-
-      margin-bottom: 24px;
-
-      a {
-        line-height: 0;
-      }
-    }
-
     .form {
       width: 100%;
 
@@ -38,25 +28,6 @@
 
       .fieldWithError {
         margin-bottom: 0 !important;
-      }
-
-      .singIn {
-        margin-bottom: 18px;
-      }
-
-      .wrapLinkForgotPass {
-        @include flex-block(flex, row, flex-end);
-
-        width: 100%;
-        margin-bottom: 24px;
-
-        .link {
-          text-decoration: none;
-
-          .linkForgotPass {
-            color: $color-light-900;
-          }
-        }
       }
     }
   }

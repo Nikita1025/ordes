@@ -2,6 +2,7 @@ import React, { ChangeEvent, ComponentProps, useState } from 'react';
 
 import EyeIcon from 'src/assets/icon/eye-icon';
 import EyeOffIcon from 'src/assets/icon/eye-off-icon';
+import SearchIcon from 'src/assets/icon/search-icon';
 
 import s from './input-main.module.scss';
 
@@ -65,6 +66,7 @@ export const InputMain: React.FC<UIInputPropsType> = props => {
           onClick={onClickShowValue}
         />
       )}
+      {type === 'search' && <SearchIcon className={s.searchIcon} />}
       {showErrorMess && <span className={s.errorWrap}>{errorMessage}</span>}
     </div>
   );

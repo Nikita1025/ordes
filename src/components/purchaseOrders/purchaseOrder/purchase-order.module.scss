@@ -1,8 +1,10 @@
+@import "src/styles/colors";
+@import "src/styles/mixins";
+@import "src/styles/typography";
 .container{
     display: flex;
-    margin-top: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #a1a1a1;
+    margin: 10px 0 20px 0;
+    border: 1px solid $color-light-700;
     border-radius: 4px;
     padding: 5px;
     justify-content: space-between;
@@ -13,60 +15,29 @@
             flex-direction: column;
             justify-content: space-between;
             margin: 20px 25px 10px 20px;
+            .info{
+                display: flex;
+                flex-direction: column;
+                .title{
+                    @include typography($font-size-xxl, $line-height-l, $font-weight-bold);
+                    margin-bottom: 5px;
+                    cursor: pointer;
+                    transition: 0.3s;
+                    :hover{
+                        color: $color-accent-700;
+                        transition: 0.3s;
+                    }
+                }
+                .number_order{
+                    @include typography($font-size-xl, $line-height-l, $font-weight-h3-large);
+                    color: $color-light-900;
+                    margin-bottom: 5px;
+                }
+                .code{
+                    @include typography($font-size-m, $line-height-l, $font-weight-bold);
+                    margin-bottom: 5px;
+                }
+            }
         }
     }
-}
-
-
-
-
-.info{
-    display: flex;
-    flex-direction: column;
-}
-
-.title{
-    font-size: 24px;
-    line-height: 32px;
-    font-weight: 700;
-    margin-bottom: 5px;
-    cursor: pointer;
-    transition: 0.3s;
-
-}
-.title:hover{
-    color: #2F68CC;
-    transition: 0.3s;
-}
-.description{
-    font-size: 16px;
-    line-height: 20px;
-    font-weight: 400;
-
-}
-.price{
-    font-weight: 700;
-    font-size: 15px;
-    margin-bottom: 5px;
-
-}
-.category{
-    font-size: 20px;
-    color: #888;
-    margin-bottom: 5px;
-}
-.icons{
-    display: flex;
-    align-items: flex-end;
-    gap: 10px;
-    padding: 10px;
-}
-.icon{
-    cursor: pointer;
-    transition: 0.3s;
-}
-.icon:hover{
-    width: 25px;
-    height: 25px;
-    transition: 0.3s;
 }

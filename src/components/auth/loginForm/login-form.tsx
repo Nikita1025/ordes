@@ -2,13 +2,12 @@ import React from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { ErrorSnackbar } from 'src/common/errorSnackbar/error-snackbar';
 import { loginSchema } from 'src/common/schemas';
 import { Button } from 'src/components/ui/button';
 import { ControlledTextField } from 'src/components/ui/controlled';
 import { loginTC, useAppDispatch } from 'src/store';
 import { LoginFormType } from 'src/utils';
-
-import { ErrorSnackbar } from '../../../common/errorSnackbar/error-snackbar';
 
 import s from './login-form.module.scss';
 
@@ -34,12 +33,13 @@ export const LoginForm = () => {
   return (
     <div className={s.card}>
       <ErrorSnackbar />
+      <span className={s.title}>Авторизуйтесь</span>
       <div className={s.content}>
         <form onSubmit={handleSubmit(submitData)} className={s.form}>
           <ControlledTextField
             control={control}
             name="username"
-            label="Username"
+            label="Логин"
             className={`${s.field} ${errors.username && s.fieldWithError}`}
             fullWidth
           />
@@ -47,7 +47,7 @@ export const LoginForm = () => {
           <ControlledTextField
             control={control}
             name="password"
-            label="password"
+            label="Пароль"
             type="password"
             className={s.passField}
             fullWidth
