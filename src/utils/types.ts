@@ -47,4 +47,17 @@ export type MaterialTypeAndProductType = {
   code?: string;
   name?: string;
 };
+
+export type ProductsResponseType = {
+  id: number;
+  serial: string;
+  weight: string;
+  date: string;
+};
+export type createProductRequestType = {
+  id: string;
+  data: {
+    weight: string;
+  };
+};
 export type StatusType = 'idle' | 'loading' | 'success' | 'failed';

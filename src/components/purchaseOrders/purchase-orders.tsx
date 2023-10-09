@@ -7,10 +7,12 @@ import {
   appPurchaseOrdersSelector,
 } from 'src/store';
 
+import { ErrorSnackbar } from '../../common/errorSnackbar/error-snackbar';
 import { AddPurchaseOrderForm } from '../add-purchase-order-form';
 import { Button } from '../ui/button';
 import { TexField } from '../ui/text-field';
 
+import s from './purchase-orders.module.scss';
 import { PurchaseOrder } from './purchaseOrder/purchase-order';
 
 export const PurchaseOrders = () => {
@@ -27,12 +29,15 @@ export const PurchaseOrders = () => {
   };
 
   return (
-    <div>
-      <Button variant="primary" onClick={onClickAddOrder}>
+    <div className={s.container}>
+      <ErrorSnackbar />
+
+      <Button variant="primary" className={s.button} onClick={onClickAddOrder}>
         Создать заказ-наряд
       </Button>
-      <TexField type="search" onChangeText={setValue} />
       {addOrder && <AddPurchaseOrderForm setAddOrder={setAddOrder} />}
+
+      <TexField type="search" className={s.input} onChangeText={setValue} value={value} />
       {purchaseOrders
         ?.filter(el => {
           if (value === '') {

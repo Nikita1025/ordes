@@ -11,6 +11,9 @@ import {
   useAppDispatch,
 } from 'src/store';
 
+import { PATH } from '../../app/routes/routes';
+import { ErrorSnackbar } from '../../common/errorSnackbar/error-snackbar';
+
 import s from './purchase-order-page.module.scss';
 export const PurchaseOrderPage = () => {
   const dispatch = useAppDispatch();
@@ -29,9 +32,14 @@ export const PurchaseOrderPage = () => {
   const onClickEditMode = () => {
     setEditMode(!editMode);
   };
+  const onClickProducts = () => {
+    navigate(PATH.MAIN + id + PATH.PRODUCTS);
+  };
 
   return (
-    <div>
+    <div className={s.container_page}>
+      <ErrorSnackbar />
+
       <div className={s.back_container} onClick={onClickBack}>
         <VectorIcon />
         <span className={s.back}>Back</span>
@@ -81,10 +89,14 @@ export const PurchaseOrderPage = () => {
             </span>
           </div>
         )}
-
-        <Button type="button" onClick={onClickEditMode} className={s.button}>
-          <span>Редактировать</span>
-        </Button>
+        <div className={s.button_container}>
+          <Button variant="primary" onClick={onClickEditMode} className={s.button}>
+            <span>Редактировать</span>
+          </Button>
+          <Button variant="outlined" onClick={onClickProducts} className={s.button}>
+            <span>Произведенная продукция</span>
+          </Button>
+        </div>
       </div>
     </div>
   );

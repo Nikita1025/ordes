@@ -25,7 +25,7 @@ const initialState: AuthState = {
 
 const slice = createSlice({
   initialState,
-  name: 'nomenclatures',
+  name: 'purchaseOrders',
   reducers: {},
   extraReducers: builder => {
     builder.addCase(purchaseOrdersTC.fulfilled, (state, action) => {

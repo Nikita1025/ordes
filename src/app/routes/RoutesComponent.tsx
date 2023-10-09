@@ -3,6 +3,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { LoginForm } from 'src/components/auth/loginForm';
 
+import { Products } from '../../components/products/products';
 import { PurchaseOrderPage } from '../../components/purchaseOrderPage';
 import { PurchaseOrders } from '../../components/purchaseOrders/purchase-orders';
 
@@ -16,7 +17,7 @@ export const RoutesComponent = () => {
         <Route element={<PrivateRoutes />}>
           <Route path={'/'} element={<PurchaseOrders />} />
           <Route path={PATH.MAIN + ':id'} element={<PurchaseOrderPage />} />
-          {/*<Route path={PATH.PROFILE} element={<Profile />} />*/}
+          <Route path={PATH.MAIN + ':id' + PATH.PRODUCTS} element={<Products />} />
           {/*<Route path={PATH.CARDS_PACKS} element={<CardsPack />} />*/}
           {/*<Route path={PATH.LEARNING_CARDS + '/:cardsPack_id'} element={<LearningCards />} />*/}
         </Route>

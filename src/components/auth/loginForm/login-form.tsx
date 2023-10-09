@@ -2,17 +2,20 @@ import React from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { ErrorSnackbar } from 'src/common/errorSnackbar/error-snackbar';
 import { loginSchema } from 'src/common/schemas';
 import { Button } from 'src/components/ui/button';
 import { ControlledTextField } from 'src/components/ui/controlled';
-import { loginTC, useAppDispatch } from 'src/store';
+import { appIsAuthSelector, loginTC, useAppDispatch, useAppSelector } from 'src/store';
 import { LoginFormType } from 'src/utils';
 
 import s from './login-form.module.scss';
 
 export const LoginForm = () => {
   const dispatch = useAppDispatch();
+  const isAuth = useAppSelector(appIsAuthSelector);
+  const navigate = useNavigate();
   const {
     control,
     handleSubmit,
@@ -29,6 +32,10 @@ export const LoginForm = () => {
   const submitData = (data: LoginFormType) => {
     dispatch(loginTC(data));
   };
+
+  if (isAuth) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <div className={s.card}>
