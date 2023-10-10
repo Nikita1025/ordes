@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AppRootStateType } from 'src/store';
 import { StatusType } from 'src/utils';
-
-import { AppRootStateType } from './store';
 
 export type InitialStateType = {
   error: null | string;

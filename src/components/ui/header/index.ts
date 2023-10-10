@@ -1,1 +1,1 @@
-export * from './header.module.scss';
+export * from './header';

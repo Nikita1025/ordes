@@ -1,17 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
+import { productsApi } from 'src/api';
 import {
   AsyncThunkConfig,
   createProductRequestType,
-  EditPurchaseOrderType,
-  EditRequestPurchaseOrderType,
   errorMessage,
   ProductsResponseType,
-  PurchaseOrderType,
 } from 'src/utils';
-
-import { productsApi } from '../api/products-api';
-import { purchaseOrdersApi } from '../api/purchase-orders-api';
 
 import { setSubmittingAC } from './app-slice';
 import { AppRootStateType } from './store';

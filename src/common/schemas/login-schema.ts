@@ -5,14 +5,14 @@ export const loginSchema = () => {
     username: z
       .string()
       .trim()
-      .nonempty('Enter your username')
-      .min(3, 'Username  must have more than 3 characters')
-      .max(100),
+      .nonempty('Введите логин')
+      .min(3, 'Логин должен содержать минимум 3 символа')
+      .max(20, 'Логин должен содержать максимум 20 символов'),
     password: z
       .string()
       .trim()
-      .nonempty('Enter your password')
-      .min(3, 'Password  must have more than 3 characters')
-      .max(20, 'Password must not contain more than 20 characters'),
+      .nonempty('Введите пароль')
+      .min(3, 'Пароль должен содержать минимум 3 символа')
+      .max(20, 'Пароль должен содержать максимум 20 символов'),
   });
 };

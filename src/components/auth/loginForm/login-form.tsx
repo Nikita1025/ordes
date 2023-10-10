@@ -2,7 +2,8 @@ import React from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
+import { PATH } from 'src/app/routes/routes';
 import { ErrorSnackbar } from 'src/common/errorSnackbar/error-snackbar';
 import { loginSchema } from 'src/common/schemas';
 import { Button } from 'src/components/ui/button';
@@ -15,7 +16,6 @@ import s from './login-form.module.scss';
 export const LoginForm = () => {
   const dispatch = useAppDispatch();
   const isAuth = useAppSelector(appIsAuthSelector);
-  const navigate = useNavigate();
   const {
     control,
     handleSubmit,
@@ -34,7 +34,7 @@ export const LoginForm = () => {
   };
 
   if (isAuth) {
-    return <Navigate to="/" />;
+    return <Navigate to={PATH.MAIN} />;
   }
 
   return (
@@ -60,7 +60,7 @@ export const LoginForm = () => {
             fullWidth
           />
           <Button type="submit" variant="primary" fullWidth className={s.singIn}>
-            Login
+            Войти
           </Button>
         </form>
       </div>

@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 
 import LinearProgress from '@mui/material/LinearProgress';
-import { Header } from 'src/components/ui/header/header';
+import { Header } from 'src/components/ui/header';
 import { appStatusSelector, useAppSelector } from 'src/store';
 
 import s from './layout.module.scss';

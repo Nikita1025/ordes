@@ -1,25 +1,20 @@
 import React, { useEffect, useState } from 'react';
 
 import { useNavigate, useParams } from 'react-router-dom';
+import VectorIcon from 'src//assets/icon/vector-icon';
+import { PATH } from 'src/app/routes/routes';
+import { ErrorSnackbar } from 'src/common/errorSnackbar';
+import { Product } from 'src/components/products/product';
+import { Button } from 'src/components/ui/button';
+import { TexField } from 'src/components/ui/text-field';
 import {
   useAppDispatch,
   useAppSelector,
-  purchaseOrdersTC,
-  appPurchaseOrdersSelector,
-} from 'src/store';
-
-import { PATH } from '../../app/routes/routes';
-import VectorIcon from '../../assets/icon/vector-icon';
-import { ErrorSnackbar } from '../../common/errorSnackbar/error-snackbar';
-import {
   appProductsSelector,
   createProductTC,
   productsTC,
-} from '../../store/products-slice';
-import { Button } from '../ui/button';
-import { TexField } from '../ui/text-field';
+} from 'src/store';
 
-import { Product } from './product/product';
 import s from './products.module.scss';
 
 export const Products = () => {

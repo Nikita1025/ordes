@@ -1,19 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useForm } from 'react-hook-form';
 import { Button } from 'src/components/ui/button';
 import { ControlledTextField } from 'src/components/ui/controlled';
-import { EditPurchaseOrderType, MaterialTypeAndProductType } from 'src/utils';
+import { editPurchaseOrderTC, useAppDispatch, useAppSelector } from 'src/store';
+import { EditPurchaseOrderType, NomenclaturesType } from 'src/utils';
 
-import { editPurchaseOrderTC, useAppDispatch } from '../../store';
+import {
+  appNomenclaturesSelector,
+  nomenclaturesTC,
+} from '../../store/nomenclatures-slice';
+import { ControlledSelect } from '../ui/controlled/controlled-select';
+import { SelectBox } from '../ui/select-box';
 
 import s from './edit-purchase-order-form.module.scss';
 type EditProductFormType = {
   id: string;
   number: string;
   start_date: null | string;
-  material: MaterialTypeAndProductType;
-  product: MaterialTypeAndProductType;
+  material: NomenclaturesType;
+  product: NomenclaturesType;
   is_finished: boolean;
   setEditMode: (editMode: boolean) => void;
 };
@@ -28,6 +34,7 @@ export const EditPurchaseOrderForm = ({
   id,
 }: EditProductFormType) => {
   const dispatch = useAppDispatch();
+  const nomenclatures = useAppSelector(appNomenclaturesSelector);
   const {
     control,
     handleSubmit,
@@ -38,23 +45,17 @@ export const EditPurchaseOrderForm = ({
     defaultValues: {
       number: number,
       start_date: start_date,
-      material: {
-        id: material.id,
-        code: material.code,
-        name: material.name,
-      },
-      product: {
-        id: material.id,
-        name: product.name,
-        code: product.code,
-      },
+      material: material.id,
+      product: product.id,
       is_finished: is_finished,
     },
   });
+
   const onSubmit = handleSubmit((requestData: EditPurchaseOrderType) => {
     dispatch(editPurchaseOrderTC({ data: requestData, id: id }));
     reset();
     setEditMode(false);
+    console.log(requestData);
   });
   const onClick = () => {
     setEditMode(false);
@@ -69,33 +70,47 @@ export const EditPurchaseOrderForm = ({
           label="Номер заказ-наряда"
           className={`${s.field} ${errors.number && s.fieldWithError}`}
         />
-        <ControlledTextField
+        <ControlledSelect
+          options={nomenclatures}
+          defaultValue={material.name}
+          name="material"
           control={control}
-          name="product.name"
-          label="Название продукта"
-          className={`${s.field} ${errors.product?.name && s.fieldWithError}`}
-        />
-        <ControlledTextField
-          control={control}
-          name="product.code"
-          label="Код продукта"
-          className={`${s.field} ${errors.product?.code && s.fieldWithError}`}
-          fullWidth
-        />
-        <ControlledTextField
-          control={control}
-          name="material.name"
           label="Материал"
-          className={`${s.field} ${errors.material?.name && s.fieldWithError}`}
-          fullWidth
         />
-        <ControlledTextField
+        <ControlledSelect
+          options={nomenclatures}
+          defaultValue={product.name}
+          name="product"
           control={control}
-          name="material.code"
-          label="Код материала"
-          className={`${s.field} ${errors.material?.code && s.fieldWithError}`}
-          fullWidth
+          label="Продукт"
         />
+        {/*<ControlledTextField*/}
+        {/*  control={control}*/}
+        {/*  name="product.name"*/}
+        {/*  label="Название продукта"*/}
+        {/*  className={`${s.field} ${errors.product?.name && s.fieldWithError}`}*/}
+        {/*/>*/}
+        {/*<ControlledTextField*/}
+        {/*  control={control}*/}
+        {/*  name="product.code"*/}
+        {/*  label="Код продукта"*/}
+        {/*  className={`${s.field} ${errors.product?.code && s.fieldWithError}`}*/}
+        {/*  fullWidth*/}
+        {/*/>*/}
+        {/*<ControlledTextField*/}
+        {/*  control={control}*/}
+        {/*  name="material.name"*/}
+        {/*  label="Материал"*/}
+        {/*  className={`${s.field} ${errors.material?.name && s.fieldWithError}`}*/}
+        {/*  fullWidth*/}
+        {/*/>*/}
+        {/*<ControlledTextField*/}
+        {/*  control={control}*/}
+        {/*  name="material.code"*/}
+        {/*  label="Код материала"*/}
+        {/*  className={`${s.field} ${errors.material?.code && s.fieldWithError}`}*/}
+        {/*  fullWidth*/}
+        {/*/>*/}
         <ControlledTextField
           control={control}
           name="is_finished"
@@ -105,10 +120,10 @@ export const EditPurchaseOrderForm = ({
         />
         <div className={s.buttons}>
           <Button type="submit" variant="primary">
-            Save
+            Сохранить
           </Button>
           <Button variant="link" onClick={onClick}>
-            Cancel
+            Зкарыть
           </Button>
         </div>
       </form>

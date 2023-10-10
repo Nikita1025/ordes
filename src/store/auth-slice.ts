@@ -2,15 +2,13 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 import Cookies from 'js-cookie';
 import { authApi } from 'src/api';
+import { AppRootStateType, setSubmittingAC } from 'src/store';
 import {
   AsyncThunkConfig,
   errorMessage,
   LoginFormType,
   LoginResponseType,
 } from 'src/utils';
-
-import { setSubmittingAC } from './app-slice';
-import { AppRootStateType } from './store';
 
 type AuthState = {
   isAuth: boolean;

@@ -1,8 +1,7 @@
 import Cookies from 'js-cookie';
+import baseApi from 'src/api/base-api';
+import { createProductRequestType, ProductsResponseType } from 'src/utils';
 
-import { createProductRequestType, ProductsResponseType } from '../utils';
-
-import baseApi from './base-api';
 const token = Cookies.get('Token');
 
 export const productsApi = {

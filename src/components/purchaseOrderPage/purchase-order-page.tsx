@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
 import { useNavigate, useParams } from 'react-router-dom';
+import { PATH } from 'src/app/routes/routes';
 import VectorIcon from 'src/assets/icon/vector-icon';
+import { ErrorSnackbar } from 'src/common/errorSnackbar';
 import { EditPurchaseOrderForm } from 'src/components/edit-purchase-order-form';
 import { Button } from 'src/components/ui/button';
 import {
@@ -11,8 +13,7 @@ import {
   useAppDispatch,
 } from 'src/store';
 
-import { PATH } from '../../app/routes/routes';
-import { ErrorSnackbar } from '../../common/errorSnackbar/error-snackbar';
+import { nomenclaturesTC } from '../../store/nomenclatures-slice';
 
 import s from './purchase-order-page.module.scss';
 export const PurchaseOrderPage = () => {
@@ -24,10 +25,11 @@ export const PurchaseOrderPage = () => {
 
   useEffect(() => {
     dispatch(purchaseOrderTC(id!));
+    dispatch(nomenclaturesTC());
   }, [id]);
 
   const onClickBack = () => {
-    navigate('/');
+    navigate(PATH.MAIN);
   };
   const onClickEditMode = () => {
     setEditMode(!editMode);
@@ -42,7 +44,7 @@ export const PurchaseOrderPage = () => {
 
       <div className={s.back_container} onClick={onClickBack}>
         <VectorIcon />
-        <span className={s.back}>Back</span>
+        <span className={s.back}>Назад</span>
       </div>
       <div className={s.container}>
         {editMode && (

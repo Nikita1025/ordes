@@ -1,11 +1,11 @@
 import Cookies from 'js-cookie';
+import baseApi from 'src/api/base-api';
 import {
   EditPurchaseOrderType,
   PurchaseOrdersResponseType,
   PurchaseOrderType,
 } from 'src/utils';
 
-import baseApi from './base-api';
 const token = Cookies.get('Token');
 
 export const purchaseOrdersApi = {

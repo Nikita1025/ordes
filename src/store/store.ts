@@ -3,6 +3,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 import { appReducer } from './app-slice';
 import { authReducer } from './auth-slice';
+import { nomenclaturesReducer } from './nomenclatures-slice';
 import { productsReducer } from './products-slice';
 import { purchaseOrdersReducer } from './purchase-orders-slice';
 
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   purchaseOrders: purchaseOrdersReducer,
   products: productsReducer,
+  nomenclatures: nomenclaturesReducer,
 });
 
 export const store = configureStore({

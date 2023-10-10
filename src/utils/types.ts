@@ -21,31 +21,33 @@ export type AsyncThunkConfig = {
 export type PurchaseOrdersResponseType = {
   results: PurchaseOrderType[];
 };
+export type NomenclaturesResponseType = {
+  results: NomenclaturesType[];
+};
+export type NomenclaturesType = {
+  id: number;
+  code: string;
+  name: string;
+};
 export type PurchaseOrderType = {
   id: number;
   number: string;
   start_date: null;
-  material: MaterialTypeAndProductType;
-  product: MaterialTypeAndProductType;
+  material: NomenclaturesType;
+  product: NomenclaturesType;
   is_finished: boolean;
 };
 export type EditPurchaseOrderType = {
   id?: number;
   number?: string;
   start_date?: null | string;
-  material: MaterialTypeAndProductType;
-  product: MaterialTypeAndProductType;
+  material: number;
+  product: number;
   is_finished?: boolean;
 };
 export type EditRequestPurchaseOrderType = {
   id: string;
   data: EditPurchaseOrderType;
-};
-
-export type MaterialTypeAndProductType = {
-  id?: number;
-  code?: string;
-  name?: string;
 };
 
 export type ProductsResponseType = {

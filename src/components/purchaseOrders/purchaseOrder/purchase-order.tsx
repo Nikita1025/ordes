@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
-import { MaterialTypeAndProductType } from 'src/utils';
+import { PATH } from 'src/app/routes/routes';
 
-import { PATH } from '../../../app/routes/routes';
+import { NomenclaturesType } from '../../../utils';
 
 import s from './purchase-order.module.scss';
 
 type PurchaseOrderType = {
-  product: MaterialTypeAndProductType;
+  product: NomenclaturesType;
   number: string;
   is_finished: boolean;
   id: number;

@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
 
+import { ErrorSnackbar } from 'src/common/errorSnackbar';
+import { AddPurchaseOrderForm } from 'src/components/add-purchase-order-form';
+import { Button } from 'src/components/ui/button';
+import { TexField } from 'src/components/ui/text-field';
 import {
   useAppDispatch,
   useAppSelector,
   purchaseOrdersTC,
   appPurchaseOrdersSelector,
 } from 'src/store';
-
-import { ErrorSnackbar } from '../../common/errorSnackbar/error-snackbar';
-import { AddPurchaseOrderForm } from '../add-purchase-order-form';
-import { Button } from '../ui/button';
-import { TexField } from '../ui/text-field';
+import { nomenclaturesTC } from 'src/store/nomenclatures-slice';
 
 import s from './purchase-orders.module.scss';
-import { PurchaseOrder } from './purchaseOrder/purchase-order';
+import { PurchaseOrder } from './purchaseOrder';
 
 export const PurchaseOrders = () => {
   const dispatch = useAppDispatch();
@@ -23,7 +23,8 @@ export const PurchaseOrders = () => {
 
   useEffect(() => {
     dispatch(purchaseOrdersTC());
-  }, []);
+    dispatch(nomenclaturesTC());
+  }, [dispatch]);
   const onClickAddOrder = () => {
     setAddOrder(!addOrder);
   };

@@ -1,17 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
+import { purchaseOrdersApi } from 'src/api';
+import { setSubmittingAC, AppRootStateType } from 'src/store';
 import {
   AsyncThunkConfig,
-  EditPurchaseOrderType,
   EditRequestPurchaseOrderType,
   errorMessage,
   PurchaseOrderType,
 } from 'src/utils';
-
-import { purchaseOrdersApi } from '../api/purchase-orders-api';
-
-import { setSubmittingAC } from './app-slice';
-import { AppRootStateType } from './store';
 
 type AuthState = {
   purchaseOrders: PurchaseOrderType[];
@@ -90,6 +86,7 @@ export const editPurchaseOrderTC = createAsyncThunk<
     try {
       const res = await purchaseOrdersApi.editPurchaseOrder(data, id);
 
+      dispatch(purchaseOrderTC(id));
       dispatch(setSubmittingAC('success'));
 
       return res;
