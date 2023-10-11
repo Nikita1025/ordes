@@ -1,0 +1,43 @@
+@import "src/styles/colors";
+@import "src/styles/mixins";
+@import "src/styles/typography";
+
+.container {
+  display: flex;
+  border: 1px solid $color-light-700;
+  border-radius: 4px;
+  padding: 40px;
+  flex-direction: column;
+
+  .button{
+    width: 120px;
+  }
+  .block_info {
+    display: flex;
+    flex-direction: column;
+    background-color: $color-light-100;
+    padding: 20px;
+    margin-bottom: 20px;
+    .title {
+      @include typography($font-size-xxl, $line-height-l, $font-weight-bold);
+      margin-bottom: 10px;
+      color: $color-dark-900;
+      cursor: pointer;
+      transition: 0.3s;
+
+    }
+
+    .serial {
+      @include typography($font-size-xl, $line-height-l, $font-weight-h3-large);
+      color: $color-dark-900;
+      margin-bottom: 10px;
+    }
+
+    .date {
+      @include typography($font-size-m, $line-height-l, $font-weight-bold);
+      margin-bottom: 10px;
+      color: $color-dark-900;
+
+    }
+  }
+}

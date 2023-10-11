@@ -1,22 +1,23 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 import { productsApi } from 'src/api';
+import { AppRootStateType, setSubmittingAC } from 'src/store';
 import {
   AsyncThunkConfig,
   createProductRequestType,
   errorMessage,
+  getProductRequestType,
   ProductsResponseType,
 } from 'src/utils';
 
-import { setSubmittingAC } from './app-slice';
-import { AppRootStateType } from './store';
-
 type AuthState = {
   products: ProductsResponseType[];
+  product: ProductsResponseType;
 };
 
 const initialState: AuthState = {
   products: [],
+  product: {} as ProductsResponseType,
 };
 
 const slice = createSlice({
@@ -29,11 +30,16 @@ const slice = createSlice({
         state.products = action.payload;
       }
     });
-    // builder.addCase(purchaseOrderTC.fulfilled, (state, action) => {
-    //   if (action.payload) {
-    //     state.purchaseOrder = action.payload;
-    //   }
-    // });
+    builder.addCase(productTC.fulfilled, (state, action) => {
+      if (action.payload) {
+        state.product = action.payload;
+      }
+    });
+    builder.addCase(createProductTC.fulfilled, (state, action) => {
+      if (action.payload) {
+        state.products = [action.payload, ...state.products];
+      }
+    });
   },
 });
 
@@ -57,6 +63,23 @@ export const productsTC = createAsyncThunk<
     return rejectWithValue(errorMessage(dispatch, error));
   }
 });
+export const productTC = createAsyncThunk<any, getProductRequestType, AsyncThunkConfig>(
+  'products/getProduct',
+  async (data, { dispatch, rejectWithValue }) => {
+    dispatch(setSubmittingAC('loading'));
+    try {
+      const res = await productsApi.getProduct(data.id, data.id_product);
+
+      dispatch(setSubmittingAC('success'));
+
+      return res;
+    } catch (e) {
+      const error = e as Error | AxiosError;
+
+      return rejectWithValue(errorMessage(dispatch, error));
+    }
+  },
+);
 export const createProductTC = createAsyncThunk<
   ProductsResponseType,
   createProductRequestType,
@@ -66,7 +89,6 @@ export const createProductTC = createAsyncThunk<
   try {
     const res = await productsApi.createProduct(data);
 
-    dispatch(productsTC(data.id));
     dispatch(setSubmittingAC('success'));
 
     return res;
@@ -76,48 +98,6 @@ export const createProductTC = createAsyncThunk<
     return rejectWithValue(errorMessage(dispatch, error));
   }
 });
-// export const editPurchaseOrderTC = createAsyncThunk<
-//   PurchaseOrderType,
-//   EditRequestPurchaseOrderType,
-//   AsyncThunkConfig
-// >(
-//   'purchaseOrders/editPurchaseOrder',
-//   async ({ data, id }, { dispatch, rejectWithValue }) => {
-//     dispatch(setSubmittingAC('loading'));
-//     try {
-//       const res = await purchaseOrdersApi.editPurchaseOrder(data, id);
-//
-//       dispatch(setSubmittingAC('success'));
-//
-//       return res;
-//     } catch (e) {
-//       const error = e as Error | AxiosError;
-//
-//       return rejectWithValue(errorMessage(dispatch, error));
-//     }
-//   },
-// );
-// export const createPurchaseOrderTC = createAsyncThunk<
-//   PurchaseOrderType,
-//   EditRequestPurchaseOrderType,
-//   AsyncThunkConfig
-// >(
-//   'purchaseOrders/createPurchaseOrder',
-//   async ({ data, id }, { dispatch, rejectWithValue }) => {
-//     dispatch(setSubmittingAC('loading'));
-//     try {
-//       const res = await purchaseOrdersApi.addPurchaseOrder(data);
-//
-//       dispatch(setSubmittingAC('success'));
-//
-//       return res;
-//     } catch (e) {
-//       const error = e as Error | AxiosError;
-//
-//       return rejectWithValue(errorMessage(dispatch, error));
-//     }
-//   },
-// );
-// export const appPurchaseOrdersSelector = (state: AppRootStateType) =>
-//   state.purchaseOrders.purchaseOrders;
+
 export const appProductsSelector = (state: AppRootStateType) => state.products.products;
+export const appProductSelector = (state: AppRootStateType) => state.products.product;

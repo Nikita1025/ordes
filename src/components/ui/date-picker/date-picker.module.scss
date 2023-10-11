@@ -1,0 +1,38 @@
+@import 'src/styles/colors';
+
+.container{
+  display: flex;
+  flex-direction: column;
+  .label {
+    font-size: 14px;
+    color: $color-light-900;
+  }
+
+  .input {
+    all: unset;
+    padding: 10px 14px;
+    cursor: pointer;
+    width: 95%;
+    background-color: $color-dark-700;
+    border: 1px solid $color-dark-300;
+    border-radius: 2px;
+
+
+    &:hover:not(&:disabled) {
+      background: $color-dark-500;
+      border: 1px solid $color-dark-100;
+    }
+
+    &.error {
+      color: $color-danger-500;
+      box-shadow: 0 0 0 1px $color-danger-500;
+
+      &::placeholder {
+        color: $color-danger-500;
+      }
+    }
+
+  }
+
+}
+

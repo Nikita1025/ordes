@@ -32,12 +32,20 @@ export type NomenclaturesType = {
 export type PurchaseOrderType = {
   id: number;
   number: string;
-  start_date: null;
+  start_date: null | string;
   material: NomenclaturesType;
   product: NomenclaturesType;
   is_finished: boolean;
 };
 export type EditPurchaseOrderType = {
+  id?: number;
+  number?: string;
+  start_date?: null | string;
+  material: number;
+  product: number;
+  is_finished?: boolean;
+};
+export type CreatePurchaseOrderType = {
   id?: number;
   number?: string;
   start_date?: null | string;
@@ -62,5 +70,9 @@ export type createProductRequestType = {
 };
 export type createProductDataType = {
   weight: string;
+};
+export type getProductRequestType = {
+  id: string;
+  id_product: string;
 };
 export type StatusType = 'idle' | 'loading' | 'success' | 'failed';

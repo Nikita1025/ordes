@@ -8,14 +8,13 @@
 }
 
 .label {
-  height: 24px;
-  text-align: left;
-  letter-spacing: 0;
+  font-size: 14px;
+  color: $color-light-900;
 }
 
 .selectBox {
   cursor: pointer;
-
+  width: 100%;
   display: flex;
   gap: 12px;
   align-items: center;
@@ -35,7 +34,7 @@
   box-shadow: none;
 
   &:focus {
-    color: #8d9094;
+    color: $color-light-100;
     background-color: $color-dark-500;
     border: 2px solid $color-accent-500;
   }
@@ -55,7 +54,6 @@
 
   line-height: $line-height-m;
   letter-spacing: 0;
-
 
   transition: 0.2s ease-out;
 

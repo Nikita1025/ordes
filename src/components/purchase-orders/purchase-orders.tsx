@@ -9,11 +9,11 @@ import {
   useAppSelector,
   purchaseOrdersTC,
   appPurchaseOrdersSelector,
+  nomenclaturesTC,
 } from 'src/store';
-import { nomenclaturesTC } from 'src/store/nomenclatures-slice';
 
+import { PurchaseOrder } from './purchase-order';
 import s from './purchase-orders.module.scss';
-import { PurchaseOrder } from './purchaseOrder';
 
 export const PurchaseOrders = () => {
   const dispatch = useAppDispatch();
@@ -54,6 +54,7 @@ export const PurchaseOrders = () => {
             number={el.number}
             is_finished={el.is_finished}
             id={el.id}
+            start_date={el.start_date}
           />
         ))}
     </div>

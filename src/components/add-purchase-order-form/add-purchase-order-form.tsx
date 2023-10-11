@@ -1,14 +1,17 @@
 import React from 'react';
 
 import { useForm } from 'react-hook-form';
+import { ErrorSnackbar } from 'src/common/errorSnackbar';
 import { Button } from 'src/components/ui/button';
 import { ControlledTextField } from 'src/components/ui/controlled';
+import { ControlledDataPick } from 'src/components/ui/controlled/controlled-data-pick';
+import { ControlledSelect } from 'src/components/ui/controlled/controlled-select';
 import { createPurchaseOrderTC, useAppDispatch, useAppSelector } from 'src/store';
-
-import { appNomenclaturesSelector } from '../../store/nomenclatures-slice';
-import { ControlledSelect } from '../ui/controlled/controlled-select';
+import { appNomenclaturesSelector } from 'src/store/nomenclatures-slice';
+import { CreatePurchaseOrderType } from 'src/utils';
 
 import s from './add-purchase-order-form.module.scss';
+
 type AddPurchaseOrderFormType = {
   setAddOrder: (addOrder: boolean) => void;
 };
@@ -22,17 +25,17 @@ export const AddPurchaseOrderForm = ({ setAddOrder }: AddPurchaseOrderFormType) 
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<any>({
+  } = useForm<CreatePurchaseOrderType>({
     mode: 'onTouched',
     defaultValues: {
       number: '',
       start_date: '',
       material: 0,
       product: 0,
-      is_finished: false,
     },
   });
-  const onSubmit = handleSubmit((requestData: any) => {
+
+  const onSubmit = handleSubmit((requestData: CreatePurchaseOrderType) => {
     dispatch(createPurchaseOrderTC(requestData));
     reset();
     setAddOrder(false);
@@ -43,6 +46,7 @@ export const AddPurchaseOrderForm = ({ setAddOrder }: AddPurchaseOrderFormType) 
 
   return (
     <>
+      <ErrorSnackbar />
       <form onSubmit={onSubmit} className={s.container}>
         <ControlledTextField
           control={control}
@@ -52,9 +56,9 @@ export const AddPurchaseOrderForm = ({ setAddOrder }: AddPurchaseOrderFormType) 
         />
         <ControlledSelect
           options={nomenclatures}
-          name="product"
+          name="material"
           control={control}
-          label="Продукт"
+          label="Материал"
         />
         <ControlledSelect
           options={nomenclatures}
@@ -62,39 +66,10 @@ export const AddPurchaseOrderForm = ({ setAddOrder }: AddPurchaseOrderFormType) 
           control={control}
           label="Продукт"
         />
-        {/*<ControlledTextField*/}
-        {/*  control={control}*/}
-        {/*  name="product.name"*/}
-        {/*  label="Название продукта"*/}
-        {/*  className={`${s.field} ${errors.product && s.fieldWithError}`}*/}
-        {/*/>*/}
-        {/*<ControlledTextField*/}
-        {/*  control={control}*/}
-        {/*  name="product.code"*/}
-        {/*  label="Код продукта"*/}
-        {/*  className={`${s.field} ${errors.product && s.fieldWithError}`}*/}
-        {/*  fullWidth*/}
-        {/*/>*/}
-        {/*<ControlledTextField*/}
-        {/*  control={control}*/}
-        {/*  name="material.name"*/}
-        {/*  label="Материал"*/}
-        {/*  className={`${s.field} ${errors.material && s.fieldWithError}`}*/}
-        {/*  fullWidth*/}
-        {/*/>*/}
-        {/*<ControlledTextField*/}
-        {/*  control={control}*/}
-        {/*  name="material.code"*/}
-        {/*  label="Код материала"*/}
-        {/*  className={`${s.field} ${errors.material && s.fieldWithError}`}*/}
-        {/*  fullWidth*/}
-        {/*/>*/}
-        <ControlledTextField
+        <ControlledDataPick
           control={control}
-          name="is_finished"
-          label="Статус"
-          className={`${s.field} ${errors.is_finished && s.fieldWithError}`}
-          fullWidth
+          name="start_date"
+          label="Планируемая дата производства"
         />
         <div className={s.buttons}>
           <Button type="submit" variant="primary">

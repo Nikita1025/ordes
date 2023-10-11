@@ -1,0 +1,7 @@
+@import "src/styles/colors";
+@import "src/styles/mixins";
+@import "src/styles/typography";
+
+.message {
+  @include typography($font-size-xxl, $line-height-l, $font-weight-bold)
+}

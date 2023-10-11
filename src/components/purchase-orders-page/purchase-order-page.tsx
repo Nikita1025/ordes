@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { useNavigate, useParams } from 'react-router-dom';
-import { PATH } from 'src/app/routes/routes';
+import { PATH } from 'src/app/routes';
 import VectorIcon from 'src/assets/icon/vector-icon';
 import { ErrorSnackbar } from 'src/common/errorSnackbar';
 import { EditPurchaseOrderForm } from 'src/components/edit-purchase-order-form';
@@ -11,9 +11,8 @@ import {
   appPurchaseOrderSelector,
   useAppSelector,
   useAppDispatch,
+  nomenclaturesTC,
 } from 'src/store';
-
-import { nomenclaturesTC } from '../../store/nomenclatures-slice';
 
 import s from './purchase-order-page.module.scss';
 export const PurchaseOrderPage = () => {
@@ -41,7 +40,6 @@ export const PurchaseOrderPage = () => {
   return (
     <div className={s.container_page}>
       <ErrorSnackbar />
-
       <div className={s.back_container} onClick={onClickBack}>
         <VectorIcon />
         <span className={s.back}>Назад</span>

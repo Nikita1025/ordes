@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './App.scss';
-import { RoutesComponent } from 'src/app/routes/RoutesComponent';
+import { RoutesComponent } from 'src/app/routes';
 import { Layout } from 'src/components/layout';
 
 const App = () => {

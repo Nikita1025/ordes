@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
-import { PATH } from 'src/app/routes/routes';
+import { PATH } from 'src/app/routes';
 import VectorIcon from 'src/assets/icon/vector-icon';
 import { ErrorSnackbar } from 'src/common/errorSnackbar';
 import { addWeightSchema } from 'src/common/schemas/add-weight-schema';
@@ -27,12 +27,7 @@ export const Products = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const {
-    control,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<createProductDataType>({
+  const { control, handleSubmit, reset } = useForm<createProductDataType>({
     resolver: zodResolver(addWeightSchema()),
     mode: 'onTouched',
     defaultValues: {
@@ -66,9 +61,11 @@ export const Products = () => {
           label="Введите массу"
           className={s.input}
         />
-        <Button variant="primary" type="submit">
-          Сохранить
-        </Button>
+        <div className={s.button_cont}>
+          <Button variant="primary" className={s.button} type="submit">
+            Сохранить
+          </Button>
+        </div>
       </form>
       <div className={s.container}>
         {products?.map(el => <Product key={el.id} {...el} />)}

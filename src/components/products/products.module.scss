@@ -1,26 +1,46 @@
 @import "src/styles/mixins";
 @import "src/styles/typography";
-.container{
+
+.container {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
 }
-.back_container{
+
+.back_container {
   display: flex;
   align-items: center;
   margin-bottom: 25px;
-  .back{
+
+  .back {
     @include typography($font-size-m, $line-height-m, $font-weight-h3-large);
     transition: 0.3s;
-    &:hover{
+
+    &:hover {
       font-size: 18px;
       transition: 0.3s;
     }
-  };
-  .add_weight{
+  }
+;
+}
+
+.add_weight {
+  gap: 25px;
+  display: flex;
+  margin-bottom: 20px;
+
+  .input {
+    width: 300px;
+  }
+
+  .button_cont {
     display: flex;
-    .input{
-      width: 300px;
+    height: 60px;
+    align-items: flex-end;
+
+    .button {
+      height: 40px;
     }
   }
+
 }

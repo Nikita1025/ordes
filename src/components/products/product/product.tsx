@@ -1,21 +1,17 @@
 import React from 'react';
 
-import { useNavigate } from 'react-router-dom';
-import { PATH } from 'src/app/routes/routes';
+import { useNavigate, useParams } from 'react-router-dom';
+import { PATH } from 'src/app/routes';
+import { ProductsResponseType } from 'src/utils';
 
 import s from './product.module.scss';
 
-type PurchaseOrderType = {
-  serial: string;
-  date: string;
-  id: number;
-  weight: string;
-};
-export const Product = ({ serial, date, id, weight }: PurchaseOrderType) => {
+export const Product = ({ serial, date, id, weight }: ProductsResponseType) => {
   const navigate = useNavigate();
+  const { id: id_product } = useParams();
 
-  const onClickOrderHandler = (id_order: number) => {
-    navigate(PATH.MAIN + `${id_order}`);
+  const onClickOrderHandler = () => {
+    navigate(PATH.MAIN + id_product + PATH.PRODUCTS + id);
   };
 
   return (
@@ -23,7 +19,7 @@ export const Product = ({ serial, date, id, weight }: PurchaseOrderType) => {
       <div className={s.block_info}>
         <div className={s.container_info}>
           <div className={s.info}>
-            <span onClick={() => onClickOrderHandler(id)} className={s.title}>
+            <span onClick={onClickOrderHandler} className={s.title}>
               {serial}
             </span>
             <span className={s.number_order}>{weight}</span>

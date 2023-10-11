@@ -4,6 +4,7 @@ import { purchaseOrdersApi } from 'src/api';
 import { setSubmittingAC, AppRootStateType } from 'src/store';
 import {
   AsyncThunkConfig,
+  CreatePurchaseOrderType,
   EditRequestPurchaseOrderType,
   errorMessage,
   PurchaseOrderType,
@@ -32,6 +33,11 @@ const slice = createSlice({
     builder.addCase(purchaseOrderTC.fulfilled, (state, action) => {
       if (action.payload) {
         state.purchaseOrder = action.payload;
+      }
+    });
+    builder.addCase(createPurchaseOrderTC.fulfilled, (state, action) => {
+      if (action.payload) {
+        state.purchaseOrders = [action.payload, ...state.purchaseOrders];
       }
     });
   },
@@ -99,7 +105,7 @@ export const editPurchaseOrderTC = createAsyncThunk<
 );
 export const createPurchaseOrderTC = createAsyncThunk<
   PurchaseOrderType,
-  EditRequestPurchaseOrderType,
+  CreatePurchaseOrderType,
   AsyncThunkConfig
 >('purchaseOrders/createPurchaseOrder', async (data, { dispatch, rejectWithValue }) => {
   dispatch(setSubmittingAC('loading'));

@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { useForm } from 'react-hook-form';
+import { ErrorSnackbar } from 'src/common/errorSnackbar';
 import { Button } from 'src/components/ui/button';
 import { ControlledTextField } from 'src/components/ui/controlled';
-import { editPurchaseOrderTC, useAppDispatch, useAppSelector } from 'src/store';
-import { EditPurchaseOrderType, NomenclaturesType } from 'src/utils';
-
+import { ControlledSelect } from 'src/components/ui/controlled/controlled-select';
 import {
   appNomenclaturesSelector,
-  nomenclaturesTC,
-} from '../../store/nomenclatures-slice';
-import { ControlledSelect } from '../ui/controlled/controlled-select';
-import { SelectBox } from '../ui/select-box';
+  editPurchaseOrderTC,
+  useAppDispatch,
+  useAppSelector,
+} from 'src/store';
+import { EditPurchaseOrderType, NomenclaturesType } from 'src/utils';
 
 import s from './edit-purchase-order-form.module.scss';
 type EditProductFormType = {
@@ -62,6 +62,7 @@ export const EditPurchaseOrderForm = ({
 
   return (
     <>
+      <ErrorSnackbar />
       <form onSubmit={onSubmit} className={s.container}>
         <ControlledTextField
           control={control}
@@ -83,33 +84,6 @@ export const EditPurchaseOrderForm = ({
           control={control}
           label="Продукт"
         />
-        {/*<ControlledTextField*/}
-        {/*  control={control}*/}
-        {/*  name="product.name"*/}
-        {/*  label="Название продукта"*/}
-        {/*  className={`${s.field} ${errors.product?.name && s.fieldWithError}`}*/}
-        {/*/>*/}
-        {/*<ControlledTextField*/}
-        {/*  control={control}*/}
-        {/*  name="product.code"*/}
-        {/*  label="Код продукта"*/}
-        {/*  className={`${s.field} ${errors.product?.code && s.fieldWithError}`}*/}
-        {/*  fullWidth*/}
-        {/*/>*/}
-        {/*<ControlledTextField*/}
-        {/*  control={control}*/}
-        {/*  name="material.name"*/}
-        {/*  label="Материал"*/}
-        {/*  className={`${s.field} ${errors.material?.name && s.fieldWithError}`}*/}
-        {/*  fullWidth*/}
-        {/*/>*/}
-        {/*<ControlledTextField*/}
-        {/*  control={control}*/}
-        {/*  name="material.code"*/}
-        {/*  label="Код материала"*/}
-        {/*  className={`${s.field} ${errors.material?.code && s.fieldWithError}`}*/}
-        {/*  fullWidth*/}
-        {/*/>*/}
         <ControlledTextField
           control={control}
           name="is_finished"

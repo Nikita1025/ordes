@@ -15,6 +15,16 @@ export const productsApi = {
 
     return data;
   },
+  async getProduct(id: string, id_product: string) {
+    const { data } = await baseApi.get<ProductsResponseType[]>(
+      `/workorders/${id}/products/${id_product}/`,
+      {
+        headers: { Authorization: `Token ${token}` },
+      },
+    );
+
+    return data;
+  },
   async createProduct(newData: createProductRequestType) {
     const { data } = await baseApi.post<ProductsResponseType>(
       `/workorders/${newData.id}/products/`,

@@ -1,7 +1,6 @@
 import Cookies from 'js-cookie';
+import baseApi from 'src/api/base-api';
 import { NomenclaturesResponseType } from 'src/utils';
-
-import baseApi from './base-api';
 
 const token = Cookies.get('Token');
 

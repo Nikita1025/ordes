@@ -1,14 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
+import { nomenclaturesApi } from 'src/api';
 import { AppRootStateType, setSubmittingAC } from 'src/store';
-import {
-  AsyncThunkConfig,
-  errorMessage,
-  NomenclaturesResponseType,
-  NomenclaturesType,
-} from 'src/utils';
-
-import { nomenclaturesApi } from '../api/nomenclatures-api';
+import { AsyncThunkConfig, errorMessage, NomenclaturesType } from 'src/utils';
 
 type initialStateType = {
   nomenclatures: NomenclaturesType[];
