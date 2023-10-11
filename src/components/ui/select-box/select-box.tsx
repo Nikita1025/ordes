@@ -33,8 +33,7 @@ export const SelectBox = ({ defaultValue, options, onChange, label }: SelectProp
       >
         {options?.map(el => (
           <option className={s.line} key={el.id} id={String(el.id)}>
-            {el.name}
-            {el.code}
+            Название: {el.name} Код: {el.code}
           </option>
         ))}
       </select>
