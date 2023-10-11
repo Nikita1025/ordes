@@ -58,8 +58,9 @@ export type ProductsResponseType = {
 };
 export type createProductRequestType = {
   id: string;
-  data: {
-    weight: string;
-  };
+  data: createProductDataType;
+};
+export type createProductDataType = {
+  weight: string;
 };
 export type StatusType = 'idle' | 'loading' | 'success' | 'failed';

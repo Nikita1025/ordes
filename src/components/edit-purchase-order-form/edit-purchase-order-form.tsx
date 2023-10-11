@@ -55,7 +55,6 @@ export const EditPurchaseOrderForm = ({
     dispatch(editPurchaseOrderTC({ data: requestData, id: id }));
     reset();
     setEditMode(false);
-    console.log(requestData);
   });
   const onClick = () => {
     setEditMode(false);

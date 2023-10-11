@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
-import VectorIcon from 'src//assets/icon/vector-icon';
 import { PATH } from 'src/app/routes/routes';
+import VectorIcon from 'src/assets/icon/vector-icon';
 import { ErrorSnackbar } from 'src/common/errorSnackbar';
+import { addWeightSchema } from 'src/common/schemas/add-weight-schema';
 import { Product } from 'src/components/products/product';
 import { Button } from 'src/components/ui/button';
-import { TexField } from 'src/components/ui/text-field';
+import { ControlledTextField } from 'src/components/ui/controlled';
 import {
   useAppDispatch,
   useAppSelector,
@@ -14,6 +17,7 @@ import {
   createProductTC,
   productsTC,
 } from 'src/store';
+import { createProductDataType } from 'src/utils';
 
 import s from './products.module.scss';
 
@@ -22,10 +26,19 @@ export const Products = () => {
   const products = useAppSelector(appProductsSelector);
   const { id } = useParams();
   const navigate = useNavigate();
-  const [value, setValue] = useState('');
-  const data = {
-    weight: value,
-  };
+
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<createProductDataType>({
+    resolver: zodResolver(addWeightSchema()),
+    mode: 'onTouched',
+    defaultValues: {
+      weight: '',
+    },
+  });
 
   useEffect(() => {
     dispatch(productsTC(id!));
@@ -34,8 +47,9 @@ export const Products = () => {
   const onClickBack = () => {
     navigate(PATH.MAIN + id);
   };
-  const onClickCreateProduct = () => {
+  const submitData = (data: createProductDataType) => {
     dispatch(createProductTC({ id: id!, data }));
+    reset();
   };
 
   return (
@@ -45,12 +59,17 @@ export const Products = () => {
         <VectorIcon />
         <span className={s.back}>Назад</span>
       </div>
-      <div>
-        <TexField label="Введите массу" value={value} onChangeText={setValue} />
-        <Button variant="primary" onClick={onClickCreateProduct}>
+      <form onSubmit={handleSubmit(submitData)} className={s.add_weight}>
+        <ControlledTextField
+          control={control}
+          name="weight"
+          label="Введите массу"
+          className={s.input}
+        />
+        <Button variant="primary" type="submit">
           Сохранить
         </Button>
-      </div>
+      </form>
       <div className={s.container}>
         {products?.map(el => <Product key={el.id} {...el} />)}
       </div>

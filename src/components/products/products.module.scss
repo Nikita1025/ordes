@@ -17,4 +17,10 @@
       transition: 0.3s;
     }
   };
+  .add_weight{
+    display: flex;
+    .input{
+      width: 300px;
+    }
+  }
 }

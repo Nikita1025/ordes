@@ -101,23 +101,20 @@ export const createPurchaseOrderTC = createAsyncThunk<
   PurchaseOrderType,
   EditRequestPurchaseOrderType,
   AsyncThunkConfig
->(
-  'purchaseOrders/createPurchaseOrder',
-  async ({ data, id }, { dispatch, rejectWithValue }) => {
-    dispatch(setSubmittingAC('loading'));
-    try {
-      const res = await purchaseOrdersApi.addPurchaseOrder(data);
+>('purchaseOrders/createPurchaseOrder', async (data, { dispatch, rejectWithValue }) => {
+  dispatch(setSubmittingAC('loading'));
+  try {
+    const res = await purchaseOrdersApi.addPurchaseOrder(data);
 
-      dispatch(setSubmittingAC('success'));
+    dispatch(setSubmittingAC('success'));
 
-      return res;
-    } catch (e) {
-      const error = e as Error | AxiosError;
+    return res;
+  } catch (e) {
+    const error = e as Error | AxiosError;
 
-      return rejectWithValue(errorMessage(dispatch, error));
-    }
-  },
-);
+    return rejectWithValue(errorMessage(dispatch, error));
+  }
+});
 export const appPurchaseOrdersSelector = (state: AppRootStateType) =>
   state.purchaseOrders.purchaseOrders;
 export const appPurchaseOrderSelector = (state: AppRootStateType) =>

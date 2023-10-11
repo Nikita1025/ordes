@@ -1,6 +1,6 @@
-import React, { ChangeEvent, FC, ReactElement, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 
-import { NomenclaturesType } from '../../../utils';
+import { NomenclaturesType } from 'src/utils';
 
 import s from './selectbox.module.scss';
 export type SelectProps = {
@@ -11,14 +11,9 @@ export type SelectProps = {
   options: NomenclaturesType[];
 };
 
-export const SelectBox: FC<SelectProps> = ({
-  defaultValue,
-  options,
-  onChange,
-  label,
-}) => {
+export const SelectBox = ({ defaultValue, options, onChange, label }: SelectProps) => {
   const [value, setValue] = useState(defaultValue ? defaultValue.toString() : '');
-  const [idSelect, setIdSelect] = useState('');
+  const [_, setIdSelect] = useState('');
 
   const onChangeHandler = (event: ChangeEvent<HTMLSelectElement>) => {
     setValue(event.target.value);
@@ -39,6 +34,7 @@ export const SelectBox: FC<SelectProps> = ({
         {options?.map(el => (
           <option className={s.line} key={el.id} id={String(el.id)}>
             {el.name}
+            {el.code}
           </option>
         ))}
       </select>
