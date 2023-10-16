@@ -26,7 +26,7 @@ export type NomenclaturesResponseType = {
 };
 export type NomenclaturesType = {
   id: number;
-  code: string;
+  code?: string;
   name: string;
 };
 export type PurchaseOrderType = {
@@ -41,16 +41,16 @@ export type EditPurchaseOrderType = {
   id?: number;
   number?: string;
   start_date?: null | string;
-  material: number;
-  product: number;
+  material: string;
+  product: string;
   is_finished?: boolean;
 };
 export type CreatePurchaseOrderType = {
   id?: number;
   number?: string;
   start_date?: null | string;
-  material: number;
-  product: number;
+  material: string;
+  product: string;
   is_finished?: boolean;
 };
 export type EditRequestPurchaseOrderType = {

@@ -22,5 +22,12 @@ export const ControlledSelect = <T extends FieldValues>({
     control,
   });
 
-  return <SelectBox {...fieldProps} options={options} {...rest} />;
+  return (
+    <SelectBox
+      {...fieldProps}
+      errorMessage={error?.message}
+      options={options}
+      {...rest}
+    />
+  );
 };

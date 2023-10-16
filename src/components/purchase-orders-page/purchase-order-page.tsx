@@ -50,10 +50,8 @@ export const PurchaseOrderPage = () => {
             setEditMode={setEditMode}
             number={order.number}
             id={id!}
-            is_finished={order.is_finished}
             material={order.material}
             product={order.product}
-            start_date={order.start_date}
           />
         )}
         {!editMode && (

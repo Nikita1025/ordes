@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { ErrorSnackbar } from 'src/common/errorSnackbar';
 import { Button } from 'src/components/ui/button';
@@ -13,28 +14,28 @@ import {
 } from 'src/store';
 import { EditPurchaseOrderType, NomenclaturesType } from 'src/utils';
 
+import { addOderSchema } from '../../common/schemas/add-oder-schema';
+import { editOderSchema } from '../../common/schemas/edit-oder-schema';
+
 import s from './edit-purchase-order-form.module.scss';
 type EditProductFormType = {
   id: string;
   number: string;
-  start_date: null | string;
   material: NomenclaturesType;
   product: NomenclaturesType;
-  is_finished: boolean;
   setEditMode: (editMode: boolean) => void;
 };
 
 export const EditPurchaseOrderForm = ({
   number,
-  start_date,
   material,
   product,
-  is_finished,
   setEditMode,
   id,
 }: EditProductFormType) => {
   const dispatch = useAppDispatch();
   const nomenclatures = useAppSelector(appNomenclaturesSelector);
+
   const {
     control,
     handleSubmit,
@@ -42,12 +43,11 @@ export const EditPurchaseOrderForm = ({
     formState: { errors },
   } = useForm<EditPurchaseOrderType>({
     mode: 'onTouched',
+    resolver: zodResolver(editOderSchema()),
     defaultValues: {
       number: number,
-      start_date: start_date,
-      material: material.id,
-      product: product.id,
-      is_finished: is_finished,
+      material: String(material.id),
+      product: String(product.id),
     },
   });
 
@@ -83,13 +83,6 @@ export const EditPurchaseOrderForm = ({
           name="product"
           control={control}
           label="Продукт"
-        />
-        <ControlledTextField
-          control={control}
-          name="is_finished"
-          label="Статус"
-          className={`${s.field} ${errors.is_finished && s.fieldWithError}`}
-          fullWidth
         />
         <div className={s.buttons}>
           <Button type="submit" variant="primary">

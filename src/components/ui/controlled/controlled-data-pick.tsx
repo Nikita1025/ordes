@@ -14,11 +14,12 @@ export const ControlledDataPick = <T extends FieldValues>({
   ...rest
 }: Props<T>) => {
   const {
+    fieldState: { error },
     field: { ref, ...fieldProps },
   } = useController({
     name,
     control,
   });
 
-  return <DatePick {...fieldProps} {...rest} />;
+  return <DatePick {...fieldProps} errorMessage={error?.message} {...rest} />;
 };

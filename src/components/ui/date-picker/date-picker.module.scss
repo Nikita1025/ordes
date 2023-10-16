@@ -17,22 +17,16 @@
     border: 1px solid $color-dark-300;
     border-radius: 2px;
 
-
-    &:hover:not(&:disabled) {
-      background: $color-dark-500;
-      border: 1px solid $color-dark-100;
-    }
-
-    &.error {
-      color: $color-danger-500;
-      box-shadow: 0 0 0 1px $color-danger-500;
-
-      &::placeholder {
-        color: $color-danger-500;
-      }
-    }
-
+  }
+  .errorInput {
+    border-color: $color-danger-500;
+    outline-color: $color-danger-500;
+  }
+  .errorWrap {
+    color: $color-danger-500;
   }
 
 }
+
+
 

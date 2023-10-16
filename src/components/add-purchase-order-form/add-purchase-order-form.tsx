@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { zodResolver } from '@hookform/resolvers/zod';
+import { validateDate } from '@mui/x-date-pickers/internals';
 import { useForm } from 'react-hook-form';
 import { ErrorSnackbar } from 'src/common/errorSnackbar';
 import { Button } from 'src/components/ui/button';
@@ -9,6 +11,9 @@ import { ControlledSelect } from 'src/components/ui/controlled/controlled-select
 import { createPurchaseOrderTC, useAppDispatch, useAppSelector } from 'src/store';
 import { appNomenclaturesSelector } from 'src/store/nomenclatures-slice';
 import { CreatePurchaseOrderType } from 'src/utils';
+
+import { loginSchema } from '../../common/schemas';
+import { addOderSchema } from '../../common/schemas/add-oder-schema';
 
 import s from './add-purchase-order-form.module.scss';
 
@@ -27,11 +32,12 @@ export const AddPurchaseOrderForm = ({ setAddOrder }: AddPurchaseOrderFormType) 
     formState: { errors },
   } = useForm<CreatePurchaseOrderType>({
     mode: 'onTouched',
+    resolver: zodResolver(addOderSchema()),
     defaultValues: {
       number: '',
       start_date: '',
-      material: 0,
-      product: 0,
+      material: 'Выберите материал',
+      product: 'Выберите продукт',
     },
   });
 
@@ -59,17 +65,20 @@ export const AddPurchaseOrderForm = ({ setAddOrder }: AddPurchaseOrderFormType) 
           name="material"
           control={control}
           label="Материал"
+          className={`${s.field} ${errors.number && s.fieldWithError}`}
         />
         <ControlledSelect
           options={nomenclatures}
           name="product"
           control={control}
           label="Продукт"
+          className={`${s.field} ${errors.number && s.fieldWithError}`}
         />
         <ControlledDataPick
           control={control}
           name="start_date"
           label="Планируемая дата производства"
+          className={`${s.field} ${errors.number && s.fieldWithError}`}
         />
         <div className={s.buttons}>
           <Button type="submit" variant="primary">

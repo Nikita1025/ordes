@@ -40,8 +40,13 @@
   }
 
 }
-
-
+.selectBoxError {
+  border-color: $color-danger-500;
+  outline-color: $color-danger-500;
+}
+.errorWrap {
+  color: $color-danger-500;
+}
 
 .line {
   cursor: pointer;
