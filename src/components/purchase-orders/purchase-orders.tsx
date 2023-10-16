@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 
 import { ErrorSnackbar } from 'src/common/errorSnackbar';
 import { AddPurchaseOrderForm } from 'src/components/add-purchase-order-form';
@@ -20,6 +20,9 @@ export const PurchaseOrders = () => {
   const purchaseOrders = useAppSelector(appPurchaseOrdersSelector);
   const [value, setValue] = useState('');
   const [addOrder, setAddOrder] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [sortMethod, setSortMethod] = useState('');
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     dispatch(purchaseOrdersTC());
@@ -27,6 +30,10 @@ export const PurchaseOrders = () => {
   }, [dispatch]);
   const onClickAddOrder = () => {
     setAddOrder(!addOrder);
+  };
+
+  const handleSortChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    setSortMethod(event.target.value);
   };
 
   return (
@@ -37,7 +44,11 @@ export const PurchaseOrders = () => {
         Создать заказ-наряд
       </Button>
       {addOrder && <AddPurchaseOrderForm setAddOrder={setAddOrder} />}
-
+      <select value={sortMethod} onChange={handleSortChange}>
+        <option value="">Sort By</option>
+        <option value="name">Name</option>
+        <option value="date">Date</option>
+      </select>
       <TexField type="search" className={s.input} onChangeText={setValue} value={value} />
       {purchaseOrders
         ?.filter(el => {
