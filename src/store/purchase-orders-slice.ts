@@ -47,12 +47,12 @@ export const purchaseOrdersReducer = slice.reducer;
 
 export const purchaseOrdersTC = createAsyncThunk<
   PurchaseOrderType[],
-  void,
+  any,
   AsyncThunkConfig
->('purchaseOrders/getPurchaseOrders', async (_, { dispatch, rejectWithValue }) => {
+>('purchaseOrders/getPurchaseOrders', async (data, { dispatch, rejectWithValue }) => {
   dispatch(setSubmittingAC('loading'));
   try {
-    const res = await purchaseOrdersApi.getPurchaseOrders();
+    const res = await purchaseOrdersApi.getPurchaseOrders(data.search, data.filter);
 
     dispatch(setSubmittingAC('success'));
 

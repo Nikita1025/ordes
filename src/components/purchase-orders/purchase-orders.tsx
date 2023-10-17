@@ -25,7 +25,7 @@ export const PurchaseOrders = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    dispatch(purchaseOrdersTC());
+    dispatch(purchaseOrdersTC({ filter: 1 }));
     dispatch(nomenclaturesTC());
   }, [dispatch]);
   const onClickAddOrder = () => {

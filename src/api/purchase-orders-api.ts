@@ -9,10 +9,13 @@ import {
 const token = Cookies.get('Token');
 
 export const purchaseOrdersApi = {
-  async getPurchaseOrders() {
-    const { data } = await baseApi.get<PurchaseOrdersResponseType>('/workorders/', {
-      headers: { Authorization: `Token ${token}` },
-    });
+  async getPurchaseOrders(search?: string, filter?: number) {
+    const { data } = await baseApi.get<PurchaseOrdersResponseType>(
+      `/workorders/?is_finished__exact=${filter}`,
+      {
+        headers: { Authorization: `Token ${token}` },
+      },
+    );
 
     return data;
   },
