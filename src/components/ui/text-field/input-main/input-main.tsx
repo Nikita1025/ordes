@@ -10,6 +10,7 @@ type UIInputPropsType = {
   value?: string;
   label?: string;
   errorMessage?: string;
+  queryParams?: any;
   onChangeText?: (value: string) => void;
 } & ComponentProps<'input'>;
 
@@ -22,6 +23,7 @@ export const InputMain: React.FC<UIInputPropsType> = props => {
     label,
     placeholder,
     value,
+    queryParams,
     ...rest
   } = props;
 

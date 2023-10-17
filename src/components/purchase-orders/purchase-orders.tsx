@@ -12,6 +12,8 @@ import {
   nomenclaturesTC,
 } from 'src/store';
 
+import { CheckBox } from '../ui/checkbox';
+
 import { PurchaseOrder } from './purchase-order';
 import s from './purchase-orders.module.scss';
 
@@ -22,12 +24,22 @@ export const PurchaseOrders = () => {
   const [addOrder, setAddOrder] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [sortMethod, setSortMethod] = useState('');
+  const [checked, setChecked] = useState(false);
   const [data, setData] = useState([]);
+  const [queryParams, setQueryParams] = useState({
+    search: ' ',
+    page: 1,
+    pageCount: 6,
+    min: 0,
+    max: 100,
+    sortPacks: '',
+    user_id: '',
+  });
 
   useEffect(() => {
-    dispatch(purchaseOrdersTC({ filter: 1 }));
+    dispatch(purchaseOrdersTC({ value }));
     dispatch(nomenclaturesTC());
-  }, [dispatch]);
+  }, [value]);
   const onClickAddOrder = () => {
     setAddOrder(!addOrder);
   };
@@ -35,6 +47,9 @@ export const PurchaseOrders = () => {
   const handleSortChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setSortMethod(event.target.value);
   };
+  const searchFilter = purchaseOrders.filter(el =>
+    el.number.toLowerCase().includes(value.toLowerCase()),
+  );
 
   return (
     <div className={s.container}>
@@ -44,30 +59,18 @@ export const PurchaseOrders = () => {
         Создать заказ-наряд
       </Button>
       {addOrder && <AddPurchaseOrderForm setAddOrder={setAddOrder} />}
-      <select value={sortMethod} onChange={handleSortChange}>
-        <option value="">Sort By</option>
-        <option value="name">Name</option>
-        <option value="date">Date</option>
-      </select>
+      <CheckBox checked={checked} label="asdjkasd" onChange={setChecked} />
       <TexField type="search" className={s.input} onChangeText={setValue} value={value} />
-      {purchaseOrders
-        ?.filter(el => {
-          if (value === '') {
-            return el;
-          } else if (el.product.name!.toLowerCase().includes(value.toLowerCase())) {
-            return el;
-          }
-        })
-        .map(el => (
-          <PurchaseOrder
-            key={el.id}
-            product={el.product}
-            number={el.number}
-            is_finished={el.is_finished}
-            id={el.id}
-            start_date={el.start_date}
-          />
-        ))}
+      {searchFilter.map(el => (
+        <PurchaseOrder
+          key={el.id}
+          product={el.product}
+          number={el.number}
+          is_finished={el.is_finished}
+          id={el.id}
+          start_date={el.start_date}
+        />
+      ))}
     </div>
   );
 };

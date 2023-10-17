@@ -52,7 +52,7 @@ export const purchaseOrdersTC = createAsyncThunk<
 >('purchaseOrders/getPurchaseOrders', async (data, { dispatch, rejectWithValue }) => {
   dispatch(setSubmittingAC('loading'));
   try {
-    const res = await purchaseOrdersApi.getPurchaseOrders(data.search, data.filter);
+    const res = await purchaseOrdersApi.getPurchaseOrders(data.search);
 
     dispatch(setSubmittingAC('success'));
 
