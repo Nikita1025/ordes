@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 
 import s from './date-picker.module.scss';
 
@@ -22,6 +22,8 @@ export const DatePick = ({ label, onChange, errorMessage }: DatePickType) => {
       <span className={s.label}>{label}</span>
       <input
         type="date"
+        min="1000-01-01"
+        max="2023-10-17"
         className={`${s.input} ${errorMessage && s.errorInput}`}
         onChange={onDateChange}
       />

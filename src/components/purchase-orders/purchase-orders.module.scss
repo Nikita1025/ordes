@@ -1,9 +1,17 @@
 .container{
   width: 555px;
+  .container_filter{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    .filters{
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+
+    }
+  }
   .button{
     margin-bottom: 20px;
-  }
-  .input{
-    margin-bottom: 15px;
   }
 }

@@ -45,6 +45,11 @@ export type EditPurchaseOrderType = {
   product: string;
   is_finished?: boolean;
 };
+export type getPurchaseOrdersFiltersType = {
+  search?: string;
+  start_date?: string;
+  is_finished?: string;
+};
 export type CreatePurchaseOrderType = {
   id?: number;
   number?: string;

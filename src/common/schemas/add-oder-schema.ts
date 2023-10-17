@@ -11,5 +11,6 @@ export const addOderSchema = () => {
     material: z.string().trim().nonempty('Выберите материал '),
     product: z.string().trim().nonempty('Выберите продукт'),
     start_date: z.string().trim().nonempty('Выберите дату'),
+    is_finished: z.boolean(),
   });
 };

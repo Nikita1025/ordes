@@ -47,6 +47,7 @@ export const PurchaseOrderPage = () => {
       <div className={s.container}>
         {editMode && (
           <EditPurchaseOrderForm
+            is_finished={order.is_finished}
             setEditMode={setEditMode}
             number={order.number}
             id={id!}

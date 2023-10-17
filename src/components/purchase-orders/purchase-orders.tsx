@@ -1,8 +1,11 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
+import { useSearchParams } from 'react-router-dom';
 import { ErrorSnackbar } from 'src/common/errorSnackbar';
 import { AddPurchaseOrderForm } from 'src/components/add-purchase-order-form';
 import { Button } from 'src/components/ui/button';
+import { CheckBox } from 'src/components/ui/checkbox';
+import { DatePick } from 'src/components/ui/date-picker';
 import { TexField } from 'src/components/ui/text-field';
 import {
   useAppDispatch,
@@ -11,44 +14,73 @@ import {
   appPurchaseOrdersSelector,
   nomenclaturesTC,
 } from 'src/store';
-
-import { CheckBox } from '../ui/checkbox';
+import { useDebounce } from 'usehooks-ts';
 
 import { PurchaseOrder } from './purchase-order';
 import s from './purchase-orders.module.scss';
 
 export const PurchaseOrders = () => {
   const dispatch = useAppDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
   const purchaseOrders = useAppSelector(appPurchaseOrdersSelector);
-  const [value, setValue] = useState('');
+  const [search, setSearch] = useState('');
+  const [startData, setStartData] = useState(searchParams.get('start_date') || '');
   const [addOrder, setAddOrder] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [sortMethod, setSortMethod] = useState('');
   const [checked, setChecked] = useState(false);
-  const [data, setData] = useState([]);
-  const [queryParams, setQueryParams] = useState({
-    search: ' ',
-    page: 1,
-    pageCount: 6,
-    min: 0,
-    max: 100,
-    sortPacks: '',
-    user_id: '',
-  });
+  const debouncedSearch = useDebounce<string>(search, 500);
+  const debouncedDate = useDebounce<string>(startData, 500);
 
   useEffect(() => {
-    dispatch(purchaseOrdersTC({ value }));
     dispatch(nomenclaturesTC());
-  }, [value]);
+  }, []);
   const onClickAddOrder = () => {
     setAddOrder(!addOrder);
   };
 
-  const handleSortChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    setSortMethod(event.target.value);
+  const handleInputChange = (value: string) => {
+    setSearch(value);
   };
-  const searchFilter = purchaseOrders.filter(el =>
-    el.number.toLowerCase().includes(value.toLowerCase()),
+  const onChangeStartData = (data: string) => {
+    setStartData(data);
+  };
+  const onChangeChecked = (value: boolean) => {
+    setChecked(value);
+    searchParams.set('is_finished', value.toString());
+    setSearchParams(searchParams);
+  };
+
+  useEffect(() => {
+    if (debouncedSearch === '') return;
+    searchParams.set('search', debouncedSearch);
+    setSearchParams(searchParams);
+  }, [debouncedSearch]);
+  useEffect(() => {
+    if (debouncedDate === '') return;
+    searchParams.set('start_date', debouncedDate);
+    setSearchParams(searchParams);
+  }, [debouncedDate]);
+  const resetFilters = () => {
+    setSearch('');
+    setStartData('');
+    searchParams.delete('search');
+    searchParams.delete('start_date');
+    searchParams.delete('is_finished');
+    setSearchParams(searchParams);
+  };
+
+  useEffect(() => {
+    const params = Object.fromEntries(searchParams);
+
+    dispatch(
+      purchaseOrdersTC({
+        search: params.search,
+        start_date: params.start_date,
+        is_finished: params.is_finished,
+      }),
+    );
+  }, [searchParams]);
+  const searchFilter = purchaseOrders.filter(
+    el => el.product?.name?.toLowerCase().includes(search.toLowerCase()),
   );
 
   return (
@@ -59,8 +91,28 @@ export const PurchaseOrders = () => {
         Создать заказ-наряд
       </Button>
       {addOrder && <AddPurchaseOrderForm setAddOrder={setAddOrder} />}
-      <CheckBox checked={checked} label="asdjkasd" onChange={setChecked} />
-      <TexField type="search" className={s.input} onChangeText={setValue} value={value} />
+
+      <div className={s.container_filter}>
+        <DatePick label="Сортировка по дате" onChange={onChangeStartData} />
+        <TexField
+          placeholder="Поиск по имени продукта"
+          type="search"
+          className={s.input}
+          onChangeText={handleInputChange}
+          value={search}
+        />
+        <div className={s.filters}>
+          <CheckBox
+            checked={checked}
+            label="Готовые заказ-наряды"
+            onChange={onChangeChecked}
+          />
+          <Button variant="outlined" onClick={resetFilters}>
+            Сбросить
+          </Button>
+        </div>
+      </div>
+
       {searchFilter.map(el => (
         <PurchaseOrder
           key={el.id}

@@ -10,5 +10,6 @@ export const editOderSchema = () => {
       .max(10, 'Убедитесь, что это значение содержит не более 10 символов.'),
     material: z.string().trim().nonempty('Выберите материал '),
     product: z.string().trim().nonempty('Выберите продукт'),
+    is_finished: z.boolean(),
   });
 };

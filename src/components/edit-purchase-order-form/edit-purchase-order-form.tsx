@@ -3,9 +3,13 @@ import React from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { ErrorSnackbar } from 'src/common/errorSnackbar';
+import { editOderSchema } from 'src/common/schemas';
 import { Button } from 'src/components/ui/button';
-import { ControlledTextField } from 'src/components/ui/controlled';
-import { ControlledSelect } from 'src/components/ui/controlled/controlled-select';
+import {
+  ControlledCheckbox,
+  ControlledTextField,
+  ControlledSelect,
+} from 'src/components/ui/controlled';
 import {
   appNomenclaturesSelector,
   editPurchaseOrderTC,
@@ -14,15 +18,13 @@ import {
 } from 'src/store';
 import { EditPurchaseOrderType, NomenclaturesType } from 'src/utils';
 
-import { addOderSchema } from '../../common/schemas/add-oder-schema';
-import { editOderSchema } from '../../common/schemas/edit-oder-schema';
-
 import s from './edit-purchase-order-form.module.scss';
 type EditProductFormType = {
   id: string;
   number: string;
   material: NomenclaturesType;
   product: NomenclaturesType;
+  is_finished: boolean;
   setEditMode: (editMode: boolean) => void;
 };
 
@@ -30,6 +32,7 @@ export const EditPurchaseOrderForm = ({
   number,
   material,
   product,
+  is_finished,
   setEditMode,
   id,
 }: EditProductFormType) => {
@@ -48,6 +51,7 @@ export const EditPurchaseOrderForm = ({
       number: number,
       material: String(material.id),
       product: String(product.id),
+      is_finished: is_finished,
     },
   });
 
@@ -64,12 +68,7 @@ export const EditPurchaseOrderForm = ({
     <>
       <ErrorSnackbar />
       <form onSubmit={onSubmit} className={s.container}>
-        <ControlledTextField
-          control={control}
-          name="number"
-          label="Номер заказ-наряда"
-          className={`${s.field} ${errors.number && s.fieldWithError}`}
-        />
+        <ControlledTextField control={control} name="number" label="Номер заказ-наряда" />
         <ControlledSelect
           options={nomenclatures}
           defaultValue={material.name}
@@ -83,6 +82,12 @@ export const EditPurchaseOrderForm = ({
           name="product"
           control={control}
           label="Продукт"
+        />
+        <ControlledCheckbox
+          name="is_finished"
+          defaultValue={is_finished}
+          control={control}
+          label="Статус готовности"
         />
         <div className={s.buttons}>
           <Button type="submit" variant="primary">

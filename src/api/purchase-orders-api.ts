@@ -2,6 +2,7 @@ import Cookies from 'js-cookie';
 import baseApi from 'src/api/base-api';
 import {
   EditPurchaseOrderType,
+  getPurchaseOrdersFiltersType,
   PurchaseOrdersResponseType,
   PurchaseOrderType,
 } from 'src/utils';
@@ -9,10 +10,14 @@ import {
 const token = Cookies.get('Token');
 
 export const purchaseOrdersApi = {
-  async getPurchaseOrders(params: any) {
-    const { data } = await baseApi.get<PurchaseOrdersResponseType>(`/workorders/}`, {
+  async getPurchaseOrders(params: getPurchaseOrdersFiltersType) {
+    const { data } = await baseApi.get<PurchaseOrdersResponseType>(`/workorders/`, {
       headers: { Authorization: `Token ${token}` },
-      params: { ...params },
+      params: {
+        search: params.search,
+        start_date: params.start_date,
+        is_finished: params.is_finished,
+      },
     });
 
     return data;
