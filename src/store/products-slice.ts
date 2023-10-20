@@ -97,6 +97,7 @@ export const createProductTC = createAsyncThunk<
     const res = await productsApi.createProduct(data);
 
     dispatch(setSubmittingAC('success'));
+    dispatch(setError(null));
 
     return res;
   } catch (e) {
