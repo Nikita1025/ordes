@@ -1,39 +1,30 @@
-import React, { useEffect } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { PATH } from 'src/app/routes';
 import VectorIcon from 'src/assets/icon/vector-icon';
 import { ErrorSnackbar } from 'src/common/errorSnackbar';
-import { addWeightSchema } from 'src/common/schemas/add-weight-schema';
 import { Product } from 'src/components/products/product';
 import { Button } from 'src/components/ui/button';
-import { ControlledTextField } from 'src/components/ui/controlled';
+import { TexField } from 'src/components/ui/text-field';
 import {
   useAppDispatch,
   useAppSelector,
   appProductsSelector,
   createProductTC,
   productsTC,
+  productErrorSelector,
 } from 'src/store';
-import { createProductDataType } from 'src/utils';
 
 import s from './products.module.scss';
 
 export const Products = () => {
   const dispatch = useAppDispatch();
+  const error = useAppSelector(productErrorSelector);
   const products = useAppSelector(appProductsSelector);
+  const [weight, setWeight] = useState('');
   const { id } = useParams();
   const navigate = useNavigate();
-
-  const { control, handleSubmit, reset } = useForm<createProductDataType>({
-    resolver: zodResolver(addWeightSchema()),
-    mode: 'onTouched',
-    defaultValues: {
-      weight: '',
-    },
-  });
 
   useEffect(() => {
     dispatch(productsTC(id!));
@@ -42,9 +33,11 @@ export const Products = () => {
   const onClickBack = () => {
     navigate(PATH.MAIN + id);
   };
-  const submitData = (data: createProductDataType) => {
-    dispatch(createProductTC({ id: id!, data }));
-    reset();
+  const onChangeHandler = (value: string) => {
+    setWeight(value);
+  };
+  const onClickHandler = () => {
+    dispatch(createProductTC({ id: id!, data: { weight } }));
   };
 
   return (
@@ -54,19 +47,20 @@ export const Products = () => {
         <VectorIcon />
         <span className={s.back}>Назад</span>
       </div>
-      <form onSubmit={handleSubmit(submitData)} className={s.add_weight}>
-        <ControlledTextField
-          control={control}
-          name="weight"
-          label="Введите массу"
+      <div className={s.add_weight}>
+        <TexField
+          onChangeText={onChangeHandler}
           className={s.input}
+          value={weight}
+          label="Введите массу"
+          errorMessage={error!}
         />
         <div className={s.button_cont}>
-          <Button variant="primary" className={s.button} type="submit">
+          <Button variant="primary" className={s.button} onClick={onClickHandler}>
             Сохранить
           </Button>
         </div>
-      </form>
+      </div>
       <div className={s.container}>
         {products?.map(el => <Product key={el.id} {...el} />)}
       </div>

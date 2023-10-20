@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 import { productsApi } from 'src/api';
 import { AppRootStateType, setSubmittingAC } from 'src/store';
@@ -10,20 +10,26 @@ import {
   ProductsResponseType,
 } from 'src/utils';
 
-type AuthState = {
+export type ProductsSliceType = {
   products: ProductsResponseType[];
   product: ProductsResponseType;
+  error: null | string;
 };
 
-const initialState: AuthState = {
+const initialState: ProductsSliceType = {
   products: [],
   product: {} as ProductsResponseType,
+  error: null as string | null,
 };
 
 const slice = createSlice({
   initialState,
   name: 'products',
-  reducers: {},
+  reducers: {
+    setError(state, action: PayloadAction<string | null>) {
+      state.error = action.payload;
+    },
+  },
   extraReducers: builder => {
     builder.addCase(productsTC.fulfilled, (state, action) => {
       if (action.payload) {
@@ -44,6 +50,7 @@ const slice = createSlice({
 });
 
 export const productsReducer = slice.reducer;
+export const { setError } = slice.actions;
 
 export const productsTC = createAsyncThunk<
   ProductsResponseType[],
@@ -81,7 +88,7 @@ export const productTC = createAsyncThunk<any, getProductRequestType, AsyncThunk
   },
 );
 export const createProductTC = createAsyncThunk<
-  ProductsResponseType,
+  ProductsResponseType | any,
   createProductRequestType,
   AsyncThunkConfig
 >('products/createProduct', async (data, { dispatch, rejectWithValue }) => {
@@ -93,11 +100,13 @@ export const createProductTC = createAsyncThunk<
 
     return res;
   } catch (e) {
-    const error = e as Error | AxiosError;
+    const error = e as AxiosError<{ weight: string }>;
 
-    return rejectWithValue(errorMessage(dispatch, error));
+    dispatch(setSubmittingAC('success'));
+    rejectWithValue(dispatch(setError(error?.response!.data.weight)));
   }
 });
 
 export const appProductsSelector = (state: AppRootStateType) => state.products.products;
 export const appProductSelector = (state: AppRootStateType) => state.products.product;
+export const productErrorSelector = (state: AppRootStateType) => state.products.error;
